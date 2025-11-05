@@ -8,4 +8,4 @@ app.use(express.json());
 
 app.use('/api/users', userRoutes);
 
-app.listen(3002, () => console.log('User service corriendo en puerto 3002'));
+app.listen(3003, () => console.log('User service corriendo en puerto 3003'));

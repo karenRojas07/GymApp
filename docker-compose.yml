@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: membership_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: membership_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  user-service:
+    build: ./user-service
+    container_name: user_service
+    restart: always
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/membership_db?schema=users
+      JWT_SECRET: appUsuariosTienda
+    
+volumes:
+  postgres_data:
